@@ -29,7 +29,7 @@ func dsn(dbname string, dbc config.DbConfig) string {
 }
 
 // Connect to a database, if empty string is passed, jsut connect to MySQL
-func dbConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
+func DBConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
 	db, err := sql.Open("mysql", dsn(dbname, dbc))
 	if err != nil {
 		l.Error.Printf("Connection to MySQL failed. Reason: %s\n", err)
@@ -42,7 +42,7 @@ func dbConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
 }
 
 // Create database, unless it already exists
-func dbCreate(db *sql.DB, dbname string) (sql.Result, error) {
+func DBCreate(db *sql.DB, dbname string) (sql.Result, error) {
 	ctx, cancelfunc = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
 
@@ -57,7 +57,7 @@ func dbCreate(db *sql.DB, dbname string) (sql.Result, error) {
 }
 
 // Ping the database to verify the connection
-func dbPing(db *sql.DB) error {
+func DBPing(db *sql.DB) error {
 	ctx, cancelfunc = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
 
