@@ -24,7 +24,7 @@ type DbConfig struct {
 // Config contains the main configuration settings for the application.
 type Config struct {
 	BatchInsertSeconds int      `json:"batchInsertSeconds"`
-	Port               int      `json:"port"`
+	PortNumber         int      `json:"port"`
 	DbConfig           DbConfig `json:"database"`
 }
 
@@ -54,16 +54,16 @@ func validateConfig(config Config) error {
 			config.BatchInsertSeconds,
 		)
 	}
-	if config.Port < 0 || config.Port > 65535 {
+	if config.PortNumber < 0 || config.PortNumber > 65535 {
 		return fmt.Errorf(
-			"Port must be between 0 and 65535, %d was given.",
-			config.Port,
+			"PortNumber must be between 0 and 65535, %d was given.",
+			config.PortNumber,
 		)
 	}
-	if config.DbConfig.Port < 0 || config.DbConfig.Port > 65535 {
+	if config.DbConfig.PortNumber < 0 || config.DbConfig.PortNumber > 65535 {
 		return fmt.Errorf(
 			"The database port must be between 0 and 65535, %d was given.",
-			config.DbConfig.Port,
+			config.DbConfig.PortNumber,
 		)
 	}
 	return nil
