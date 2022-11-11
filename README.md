@@ -37,7 +37,7 @@ JavaScript will be used to collect data on the site/pages being tracked. A MySQL
 persist all the data.
 
 ## ROADMAP
-- 0.1.0 - Initial project structure, configuration file, mechanism to read/process configuration items
-- 0.2.0 - Database creation, table creation, initial CRUD operations
-- 0.3.0 - JavaScript to capture data from visited page
-- 0.4.0 -
+- [X] 0.1.0 - Initial project structure, configuration file, mechanism to read/process configuration items
+- [ ] 0.2.0 - Database creation, table creation, initial CRUD operations
+- [ ] 0.3.0 - JavaScript to capture data from visited page
+- [ ] 0.4.0 -
