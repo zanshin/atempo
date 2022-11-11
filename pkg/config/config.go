@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/zanshin/atempo/pkg/dbconf"
 	l "github.com/zanshin/atempo/pkg/logger"
 )
 
@@ -15,9 +14,9 @@ var (
 
 // Config contains the main configuration settings for the application.
 type Config struct {
-	BatchInsertSeconds int             `json:"batchInsertSeconds"`
-	Port               int             `json:"port"`
-	DbConfig           dbconf.DbConfig `json:"database"`
+	BatchInsertSeconds int      `json:"batchInsertSeconds"`
+	Port               int      `json:"port"`
+	DbConfig           DbConfig `json:"database"`
 }
 
 func ReadConfig(configFilePath string) Config {

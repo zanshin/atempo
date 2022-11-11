@@ -1,4 +1,4 @@
-package dbconf
+package config
 
 // DbConfig contains the database settings.
 type DbConfig struct {
