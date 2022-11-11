@@ -40,4 +40,6 @@ persist all the data.
 - [X] 0.1.0 - Initial project structure, configuration file, mechanism to read/process configuration items
 - [ ] 0.2.0 - Database creation, table creation, initial CRUD operations
 - [ ] 0.3.0 - JavaScript to capture data from visited page
-- [ ] 0.4.0 -
+- [ ] 0.4.0 - Initial web page(s) to display metrics from database
+- [ ] 0.5.0 - Add database indexes and tune queries
+- [ ] 0.6.0 -
