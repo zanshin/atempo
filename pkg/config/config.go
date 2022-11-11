@@ -12,6 +12,15 @@ var (
 	configFilePath string
 )
 
+// DbConfig contains the database settings.
+type DbConfig struct {
+	Host       string `json:"host"`
+	PortNumber int    `json:"port"`
+	User       string `json:"user"`
+	Pass       string `json:"pass"`
+	DBName     string `json:"name"`
+}
+
 // Config contains the main configuration settings for the application.
 type Config struct {
 	BatchInsertSeconds int      `json:"batchInsertSeconds"`
