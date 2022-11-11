@@ -2,10 +2,8 @@ package config
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
-	"os"
 
 	"github.com/zanshin/atempo/pkg/dbconf"
 	l "github.com/zanshin/atempo/pkg/logger"
@@ -22,22 +20,15 @@ type Config struct {
 	DbConfig           dbconf.DbConfig `json:"database"`
 }
 
-// Flags, config file path, setup logging
-func init() {
-	goPath := os.Getenv("GOPATH")
-	defaultConfigPath := fmt.Sprintf("%s/src/github.com/zanshin/atempo/config.json", goPath)
-	flag.StringVar(&configFilePath, "config", defaultConfigPath, "path to config.json")
+// // Flags, config file path, setup logging
+// func init() {
+// 	goPath := os.Getenv("GOPATH")
+// 	defaultConfigPath := fmt.Sprintf("%s/src/github.com/zanshin/atempo/config.json", goPath)
+// 	flag.StringVar(&configFilePath, "config", defaultConfigPath, "path to config.json")
+//
+// }
 
-	l.Setup("wa.log")
-}
-
-func main() Config {
-	// Read the config, initialize the database and listen for records.
-	flag.Parse()
-	return readConfig(configFilePath)
-}
-
-func readConfig(configFilePath string) Config {
+func ReadConfig(configFilePath string) Config {
 	config := Config{}
 	configFile, err := ioutil.ReadFile(configFilePath)
 
