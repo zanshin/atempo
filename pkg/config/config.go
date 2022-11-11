@@ -20,14 +20,6 @@ type Config struct {
 	DbConfig           dbconf.DbConfig `json:"database"`
 }
 
-// // Flags, config file path, setup logging
-// func init() {
-// 	goPath := os.Getenv("GOPATH")
-// 	defaultConfigPath := fmt.Sprintf("%s/src/github.com/zanshin/atempo/config.json", goPath)
-// 	flag.StringVar(&configFilePath, "config", defaultConfigPath, "path to config.json")
-//
-// }
-
 func ReadConfig(configFilePath string) Config {
 	config := Config{}
 	configFile, err := ioutil.ReadFile(configFilePath)
