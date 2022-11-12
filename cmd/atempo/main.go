@@ -29,7 +29,6 @@ func main() {
 	conf := config.ReadConfig(configFilePath)
 
 	l.Info.Println("Configuration read from file system.")
-	fmt.Println(conf)
 
 	// Connect to the database
 	db, err := model.DBConnect("", conf.DbConfig)
