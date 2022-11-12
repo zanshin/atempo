@@ -40,7 +40,7 @@ func main() {
 	l.Info.Println("Successfully connected to MySQL")
 
 	// Create database if it doesn't already exist
-	dbname := "testdb2"
+	dbname := "atempo"
 	res, err := model.DBCreate(db, dbname)
 	if err != nil {
 		l.Error.Fatal("Database creation failed. Exiting")

@@ -20,16 +20,17 @@ var (
 
 // Build the Data Source Name (DSN)
 func dsn(dbname string, dbc config.DbConfig) string {
-	l.Info.Printf("Data source name: %s:%s@tcp(%s:%d)/%s\n", dbc.User, "********", dbc.Host, dbc.PortNumber, dbname)
+	l.Info.Printf("Data source name: %s:%s@tcp(%s:%d)/%s\n", dbc.User, "********", dbc.Host, dbc.Port, dbname)
 	if len(dbname) == 0 {
 		l.Warning.Println("No database name provided, only connecting to MySQL server.")
 	}
 
-	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbc.User, dbc.Pass, dbc.Host, dbc.PortNumber, dbname)
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbc.User, dbc.Pass, dbc.Host, dbc.Port, dbname)
 }
 
 // Connect to a database, if empty string is passed, jsut connect to MySQL
 func DBConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
+	l.Info.Println("Entering DBConnect")
 	db, err := sql.Open("mysql", dsn(dbname, dbc))
 	if err != nil {
 		l.Error.Printf("Connection to MySQL failed. Reason: %s\n", err)
@@ -43,6 +44,7 @@ func DBConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
 
 // Create database, unless it already exists
 func DBCreate(db *sql.DB, dbname string) (sql.Result, error) {
+	l.Info.Println("Entering DBCreate")
 	ctx, cancelfunc = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
 
@@ -58,6 +60,7 @@ func DBCreate(db *sql.DB, dbname string) (sql.Result, error) {
 
 // Ping the database to verify the connection
 func DBPing(db *sql.DB) error {
+	l.Info.Println("Entering DBPing")
 	ctx, cancelfunc = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
 
@@ -74,7 +77,7 @@ func Db(dbConfig config.DbConfig) *sql.DB {
 	fmt.Println("reached func DB in persist")
 	db, err := sql.Open("mysql",
 		fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
-			dbConfig.User, dbConfig.Pass, dbConfig.Host, dbConfig.PortNumber, dbConfig.DBName))
+			dbConfig.User, dbConfig.Pass, dbConfig.Host, dbConfig.Port, dbConfig.Name))
 
 	fmt.Println("sql.Open completed in persist")
 	defer db.Close()
