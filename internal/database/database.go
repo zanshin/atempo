@@ -1,4 +1,4 @@
-package model
+package database
 
 import (
 	"context"
@@ -9,8 +9,9 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/zanshin/atempo/pkg/config"
-	l "github.com/zanshin/atempo/pkg/logger"
+	"github.com/zanshin/atempo/internal/config"
+	l "github.com/zanshin/atempo/internal/logger"
+	"github.com/zanshin/atempo/internal/model"
 )
 
 var (
@@ -94,7 +95,7 @@ func createTable(db *sql.DB, name string, query string) {
 
 }
 
-func SetPageViews(db *sql.DB, pageViews []PageView) {
+func SetPageViews(db *sql.DB, pageViews []model.PageView) {
 	fmt.Println("reached func SetPageViews in persist")
 	if len(pageViews) < 1 {
 		return
@@ -119,7 +120,7 @@ func SetPageViews(db *sql.DB, pageViews []PageView) {
 	tx.Commit()
 }
 
-func SetHrefClicks(db *sql.DB, hrefClicks []HrefClick) {
+func SetHrefClicks(db *sql.DB, hrefClicks []model.HrefClick) {
 	fmt.Println("reached func SetHrefClicks in persist")
 	if len(hrefClicks) < 1 {
 		return

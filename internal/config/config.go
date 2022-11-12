@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	l "github.com/zanshin/atempo/pkg/logger"
+	l "github.com/zanshin/atempo/internal/logger"
 )
 
 var (
