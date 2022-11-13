@@ -19,16 +19,6 @@ var (
 	cancelfunc context.CancelFunc
 )
 
-// Build the Data Source Name (DSN)
-func dsn(dbname string, dbc config.DbConfig) string {
-	l.Info.Printf("Data source name: %s:%s@tcp(%s:%d)/%s\n", dbc.User, "********", dbc.Host, dbc.Port, dbname)
-	if len(dbname) == 0 {
-		l.Warning.Println("No database name provided, only connecting to MySQL server.")
-	}
-
-	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbc.User, dbc.Pass, dbc.Host, dbc.Port, dbname)
-}
-
 // Connect to a database, if empty string is passed, jsut connect to MySQL
 func DBConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
 	l.Info.Println("Entering DBConnect")
@@ -41,6 +31,16 @@ func DBConnect(dbname string, dbc config.DbConfig) (*sql.DB, error) {
 	// defer db.Close()
 
 	return db, nil
+}
+
+// Build the Data Source Name (DSN)
+func dsn(dbname string, dbc config.DbConfig) string {
+	l.Info.Printf("Data source name: %s:%s@tcp(%s:%d)/%s\n", dbc.User, "********", dbc.Host, dbc.Port, dbname)
+	if len(dbname) == 0 {
+		l.Warning.Println("No database name provided, only connecting to MySQL server.")
+	}
+
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbc.User, dbc.Pass, dbc.Host, dbc.Port, dbname)
 }
 
 // Create database, unless it already exists
@@ -96,15 +96,17 @@ func createTable(db *sql.DB, name string, query string) {
 }
 
 func SetPageViews(db *sql.DB, pageViews []model.PageView) {
-	fmt.Println("reached func SetPageViews in persist")
+	l.Info.Println("reached func SetPageViews in persist")
 	if len(pageViews) < 1 {
 		return
 	}
+
 	tx, _ := db.Begin()
 	stmt, err := db.Prepare("INSERT INTO page_view(timestamp, url, ip_address, user_agent, screen_height, screen_width) VALUES (NOW(), $1, $2, $3, $4, $5)")
 	if err != nil {
-		log.Println("Unable to prepare statment for PageView: ", err)
+		l.Error.Println("Unable to prepare statment for PageView: ", err)
 	}
+
 	for k := range pageViews {
 		_, err = tx.Stmt(stmt).Exec(
 			pageViews[k].URL,
@@ -121,15 +123,17 @@ func SetPageViews(db *sql.DB, pageViews []model.PageView) {
 }
 
 func SetHrefClicks(db *sql.DB, hrefClicks []model.HrefClick) {
-	fmt.Println("reached func SetHrefClicks in persist")
+	l.Info.Println("reached func SetHrefClicks in persist")
 	if len(hrefClicks) < 1 {
 		return
 	}
+
 	tx, _ := db.Begin()
 	stmt, err := db.Prepare("INSERT INTO href_click(timestamp, url, ip_address, href, href_rectangle) VALUES (NOW(), $1, $2, $3, box(point($4,$5), point($6,$7)))")
 	if err != nil {
-		log.Println("Unable to prepare statment for HrefClick: ", err)
+		l.Error.Println("Unable to prepare statment for HrefClick: ", err)
 	}
+
 	for k := range hrefClicks {
 		tx.Stmt(stmt).Exec(
 			hrefClicks[k].URL,
