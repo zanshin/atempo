@@ -12,6 +12,8 @@ import (
 
 var (
 	configFilePath string
+
+	versionNumber = "0.0.0"
 )
 
 func main() {
@@ -24,8 +26,15 @@ func main() {
 	setup := flag.Bool("s", false, "Perform inital app setup, including database")
 	listen := flag.Bool("l", false, "Listen for visitor events")
 	path := flag.String("p", defaultConfigPath, "Path to configuration file")
+	version := flag.Bool("v", false, "Display version date and Git Hash")
 
 	flag.Parse()
+
+	if *version {
+		fmt.Printf("Version: %s\n", versionNumber)
+		l.Info.Println("Displayed version number. Exiting")
+		return
+	}
 
 	l.Info.Printf("Configuration path %q", *path)
 	conf := config.ReadConfig(*path)
