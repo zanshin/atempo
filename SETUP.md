@@ -16,8 +16,8 @@ Run these SQL queries to create the database tables.
 
 ### visit table
 
-    DROP TABLE visit IF EXISTS;
-    CREATE TABLE visit (id int UNSIGNED NOT NULL auto_increment, dt timestamp, ipv4 int UNSIGNED, referrer varchar(255), browser_family varchar(255), browser_version varchar(15), platform varchar(255), platform_version varchar(255), resolution varchar(13), country_name varchar(45), region_name varchar(45) city_name varchar(50), PRIMARY KEY(id));
+    DROP TABLE IF EXISTS visit;
+    CREATE TABLE visit (id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, dt timestamp, ipv4 int UNSIGNED, referrer varchar(255), browser_family varchar(255), browser_version varchar(15), platform varchar(255), platform_version varchar(255), resolution varchar(13), country_name varchar(45), region_name varchar(45) city_name varchar(50), PRIMARY KEY(id));
 
 ### href_click table
 
