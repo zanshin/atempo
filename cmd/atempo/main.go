@@ -15,18 +15,21 @@ var (
 )
 
 func main() {
+	l.Setup("logs/atempo.log")
+
+	l.Info.Println("Starting Atempo")
 	goPath := os.Getenv("GOPATH")
 	defaultConfigPath := fmt.Sprintf("%s/src/github.com/zanshin/atempo/config.json", goPath)
 
 	setup := flag.Bool("s", false, "Perform inital app setup, including database")
 	listen := flag.Bool("l", false, "Listen for visitor events")
-	flag.StringVar(&configFilePath, "config", defaultConfigPath, "path to config.json")
+	path := flag.String("p", defaultConfigPath, "Path to configuration file")
 
 	flag.Parse()
-	conf := config.ReadConfig(configFilePath)
-	l.Info.Println("Configuration read from file system.")
 
-	l.Setup("atempo.log")
+	l.Info.Printf("Configuration path %q", *path)
+	conf := config.ReadConfig(*path)
+	l.Info.Println("Configuration read from file system.")
 
 	if *setup {
 		app.RunSetup(conf)
