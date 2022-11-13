@@ -8,10 +8,6 @@ import (
 	l "github.com/zanshin/atempo/internal/logger"
 )
 
-var (
-	configFilePath string
-)
-
 // DbConfig contains the database settings.
 type DbConfig struct {
 	Host string `json:"host"`
@@ -29,6 +25,7 @@ type Config struct {
 }
 
 func ReadConfig(configFilePath string) Config {
+	l.Info.Printf("Reading configuration from %q", configFilePath)
 	config := Config{}
 	configFile, err := ioutil.ReadFile(configFilePath)
 
