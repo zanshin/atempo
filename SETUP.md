@@ -21,27 +21,10 @@ Run these SQL queries to create the database tables.
 
 ### href_click table
 
-    DROP TABLE href_click IF EXISTS;
-    CREATE TABLE href_click (
-      id int UNSIGNED NOT NULL auto_increment,
-      dt timestamp,
-      url varchar(255),
-      ip_address varchar(15),
-      href varchar(255),
-      href_rectangle polygon,
-      PRIMARY KEY(id)
-    );
+    DROP TABLE IF EXISTS href_click;
+    CREATE TABLE href_click (id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, dt timestamp, url varchar(255), ip_address varchar(15), href varchar(255), href_rectangle polygon) ENGINE=InnoDB;
 
 ### page_view table
 
-    DROP TABLE page_view IF EXISTS;
-    CREATE TABLE page_view (
-      id int UNSIGNED NOT NULL auto_increment,
-      dt timestamp,
-      url varchar(255),
-      ip_address varchar(15),
-      user_agent varchar(255),
-      screen_height int,
-      screen_width int,
-      PRIMARY KEY(id)
-    );
+    DROP TABLE IF EXISTS page_view;
+    CREATE TABLE page_view (id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, dt timestamp, url varchar(255), ip_address varchar(15), user_agent varchar(255), screen_height int, screen_width int) ENGINE=InnoDB;
