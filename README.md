@@ -39,8 +39,9 @@ persist all the data.
 ## ROADMAP
 - [X] 0.1.0 - Initial project structure, configuration file, mechanism to read/process configuration items
 - [X] 0.2.0 - Database creation
-- [ ] 0.2.1 - Table creation
-- [ ] 0.2.2 - Initial CRUD operations
+- [X] 0.2.1 - Refactoring to use `internal` rather than `pkg` project layout
+- [ ] 0.2.2 - Table creation
+- [ ] 0.2.3 - Initial CRUD operations
 - [ ] 0.3.0 - JavaScript to capture data from visited page
 - [ ] 0.4.0 - Initial web page(s) to display metrics from database
 - [ ] 0.5.0 - Add database indexes and tune queries
