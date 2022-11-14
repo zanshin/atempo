@@ -28,3 +28,10 @@ Run these SQL queries to create the database tables.
 
     DROP TABLE IF EXISTS page_view;
     CREATE TABLE page_view (id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, dt timestamp, url varchar(255), ip_address varchar(15), user_agent varchar(255), screen_height int, screen_width int) ENGINE=InnoDB;
+
+## Configuration
+Using the template `config.json` file, fill in the database information.
+
+## Running
+
+    atempo -p config.json -l
