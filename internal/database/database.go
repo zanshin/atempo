@@ -96,15 +96,16 @@ func createTable(db *sql.DB, name string, query string) {
 }
 
 func SetPageViews(db *sql.DB, pageViews []model.PageView) {
-	l.Info.Println("reached func SetPageViews in persist")
 	if len(pageViews) < 1 {
 		return
 	}
+	l.Info.Println("reached func SetPageViews in database")
 
 	tx, _ := db.Begin()
-	stmt, err := db.Prepare("INSERT INTO page_view(timestamp, url, ip_address, user_agent, screen_height, screen_width) VALUES (NOW(), $1, $2, $3, $4, $5)")
+	// stmt, err := db.Prepare("INSERT INTO page_view(dt, url, ip_address, user_agent, screen_height, screen_width) VALUES (NOW(), $1, $2, $3, $4, $5)")
+	stmt, err := db.Prepare("INSERT INTO page_view(dt, url, ip_address, user_agent, screen_height, screen_width) VALUES (NOW(), ?, ?, ?, ?, ?)")
 	if err != nil {
-		l.Error.Println("Unable to prepare statment for PageView: ", err)
+		l.Error.Printf("Unable to prepare statment: %q for PageView: %s\n", stmt, err)
 	}
 
 	for k := range pageViews {
@@ -123,10 +124,10 @@ func SetPageViews(db *sql.DB, pageViews []model.PageView) {
 }
 
 func SetHrefClicks(db *sql.DB, hrefClicks []model.HrefClick) {
-	l.Info.Println("reached func SetHrefClicks in persist")
 	if len(hrefClicks) < 1 {
 		return
 	}
+	l.Info.Println("reached func SetHrefClicks in database")
 
 	tx, _ := db.Begin()
 	stmt, err := db.Prepare("INSERT INTO href_click(timestamp, url, ip_address, href, href_rectangle) VALUES (NOW(), $1, $2, $3, box(point($4,$5), point($6,$7)))")
