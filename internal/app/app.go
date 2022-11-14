@@ -60,8 +60,9 @@ func Run(conf config.Config) {
 	l.Info.Println("How about some HandleFuncs")
 	http.HandleFunc("/page-views/", makeHandler(pageViewsHandler))
 	http.HandleFunc("/href-click/", makeHandler(hrefClickHandler))
+	http.HandleFunc("/healthcheck/", makeHandler(healthcheckHandler))
 
-	l.Info.Println("Listening and serving")
+	l.Info.Printf("Listening on %d", conf.Port)
 	http.ListenAndServe(fmt.Sprintf(":%d", conf.Port), nil)
 }
 
@@ -87,8 +88,28 @@ func IPAddress(remoteAddr string) string {
 	return arr[0]
 }
 
+func healthcheckHandler(w http.ResponseWriter, r *http.Request, body []byte) {
+
+	// test to see that we got the right path
+	if r.URL.Path != "/healthcheck" {
+		http.Error(w, "404 Not Found", http.StatusNotFound)
+		return
+	}
+
+	// only allow GET request
+	if r.Method != "GET" {
+		http.Error(w, "Method is not supported", http.StatusNotFound)
+		return
+	}
+
+	l.Info.Println("healthcheckHandler")
+	fmt.Fprintf(w, "Healthy")
+	w.WriteHeader(200)
+}
+
 func hrefClickHandler(w http.ResponseWriter, r *http.Request, body []byte) {
 	hrefClick := model.HrefClick{}
+	l.Info.Println(body)
 	if err := json.Unmarshal(body, &hrefClick); err != nil {
 		l.Error.Println("Unable to unmarshal hrefClick: ", err)
 	}
@@ -132,7 +153,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, []byte)) http.Handl
 }
 
 func dbConnect(conf config.Config) *sql.DB {
-	db, err := database.DBConnect("", conf.DbConfig)
+	db, err := database.DBConnect(conf.DbConfig.Name, conf.DbConfig)
 	if err != nil {
 		l.Error.Fatal("Connection to MySQL failed. Exiting.")
 	}
