@@ -20,7 +20,8 @@ jQuery(document).ready(function() {
   }
   jQuery.ajax({
     type: "POST",
-    url: "http://192.168.122.150:8080/page-views/",
+    // url: "http://192.168.122.150:8080/page-views/",
+    url: "http://localhost:8080/page-views/",
     data: JSON.stringify(pageView),
     dataType: "json",
     contentType: "application/json; charset=utf-8"
@@ -47,7 +48,8 @@ jQuery(document).ready(function() {
 
     jQuery.ajax({
       type: "POST",
-      url: "http://192.168.122.150:8080/href-click/",
+      // url: "http://192.168.122.150:8080/href-click/",
+      url: "http://localhost:8080/href-click/",
       data: JSON.stringify(hrefClick),
       dataType: "json",
       contentType: "application/json; charset=utf-8",
