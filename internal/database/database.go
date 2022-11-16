@@ -130,15 +130,16 @@ func SetHrefClicks(db *sql.DB, hrefClicks []model.HrefClick) {
 	l.Info.Println("reached func SetHrefClicks in database")
 
 	tx, _ := db.Begin()
-	stmt, err := db.Prepare("INSERT INTO href_click(timestamp, url, ip_address, href, href_rectangle) VALUES (NOW(), $1, $2, $3, box(point($4,$5), point($6,$7)))")
+	// stmt, err := db.Prepare("INSERT INTO href_click(timestamp, url, ip_address, href, href_rectangle) VALUES (NOW(), $1, $2, $3, box(point($4,$5), point($6,$7)))")
+	stmt, err := db.Prepare("INSERT INTO href_click(dt, url, href, hrefTop, hrefRigth, hrefBottom, hrefLeft) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)))")
 	if err != nil {
-		l.Error.Println("Unable to prepare statment for HrefClick: ", err)
+		l.Error.Printf("Unable to prepare statment: %q for HrefClick: %s\n", stmt, err)
 	}
 
 	for k := range hrefClicks {
 		tx.Stmt(stmt).Exec(
 			hrefClicks[k].URL,
-			hrefClicks[k].IPAddress,
+			// hrefClicks[k].IPAddress,
 			hrefClicks[k].Href,
 			hrefClicks[k].HrefTop,
 			hrefClicks[k].HrefRight,
